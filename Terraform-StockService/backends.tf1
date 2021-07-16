@@ -1,0 +1,9 @@
+terraform {
+  backend "remote" {
+    organization = "Pills"
+
+    workspaces {
+      name = "StockService"
+    }
+  }
+}
