@@ -31,3 +31,9 @@ output "private_sg_group_name" {
   description = "The name of the security group"
   value       = module.private_sg.this_security_group_name
 }
+
+## memcached
+output "memcached_sg_group_name" {
+  description = "The name of the security group"
+  value       = module.memcached_sg.this_security_group_name
+}
