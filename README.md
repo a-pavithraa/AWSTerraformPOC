@@ -9,9 +9,11 @@ Following is the tech stack<br/>
 This application makes use of https://rapidapi.com/apidojo/api/yahoo-finance1  <br/>
 
 Pre-requisites:
-<li>
- <ul>Domain hosted at Route 53</ul>
- <ul>Rapid API Account key</ul>
- <ul>Cognito User Pool </ul>
- </li>
+<ul>
+ <li>AWS Account</li>
+ <li>Domain hosted at Route 53</li>
+ <li>Rapid API Account key</li>
+ <li>Docker </li>
+ <li>Java 8 version or above </li>
+ </ul>
 
