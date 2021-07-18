@@ -14,8 +14,9 @@ Creates the following resources:<br/>
   <li>Route 53 records for load balancer and cloud front</li>
  </ul>
  <br/>
- Pre-requisites:
+ <b>Pre-requisites:</b>
  Domain must be hosted at Route53
+ <br/><br/>
  
  I have not checked in terraform.tfvars. Values for the below variables have to be added in tfvars:
 instance_type <br/>
