@@ -1,11 +1,11 @@
 import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import {  useLocation } from 'react-router-dom';
 import WatchListDetails from '../components/WatchLists/WatchListDetails';
-import Typography from '@material-ui/core/Typography';
+
 import Grid from '@material-ui/core/Grid';
 import { useStyles } from '../components/UI/Theme';
 const Portfolio = (prop)=>{
-    const history = useHistory();
+   
     const location = useLocation();
     const classes = useStyles();
     const queryParams = new URLSearchParams(location.search);

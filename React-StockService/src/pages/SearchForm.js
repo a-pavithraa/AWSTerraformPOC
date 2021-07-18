@@ -37,7 +37,7 @@ const SearchForm = () => {
     if(authCtx.token!==null &&authCtx.token!==undefined)
     dispatch(fetchTicks(authCtx.token));
 
-  }, [authCtx.token]);
+  }, [dispatch,authCtx.token]);
 
   
   const handleChange = (event, newValue) => {
@@ -54,7 +54,7 @@ const SearchForm = () => {
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
           <Tab label="Tickers" {...a11yProps(0)} />
           <Tab label="Watch Lists" {...a11yProps(1)} />
-          <Tab label="Crypto" {...a11yProps(2)} />
+          
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -68,9 +68,7 @@ const SearchForm = () => {
       <TabPanel value={value} index={1}>
       <WatchLists/>
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
+     
 
 
     </div>

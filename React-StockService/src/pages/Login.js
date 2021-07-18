@@ -4,12 +4,12 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import moduleClasses from './Login.module.scss';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import { useSelector, useDispatch } from 'react-redux';
+
 import AuthContext from '../store/auth-context';
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -34,6 +34,7 @@ const Login = ()=>{
    
     //const {isLoggedIn,isInvalidCredential}=context;
     const [userName,setUserName] =useState();
+    const [progress,setProgress] =useState(false);
     const[password,setPassword]=useState();
     const setUserNameChange =(event)=>{
     
@@ -47,7 +48,11 @@ const Login = ()=>{
    
     const loginHandler = (event)=>{
         event.preventDefault();
-        
+        if(userName===null || userName.trim() ===''||password===null|| password.trim() ===''){
+          alert('Please enter username and password!');
+          return false;
+        }
+        setProgress(true);
        
           var authenticationData = {
             Username : userName,
@@ -71,6 +76,7 @@ const Login = ()=>{
                 console.log(result);
                 var idToken = result.idToken.jwtToken;
                 localStorage.setItem('jwtToken', idToken);
+                setProgress(false);
                
                 const expirationTime = new Date(
                   new Date().getTime() + +3600 * 1000
@@ -86,6 +92,7 @@ const Login = ()=>{
         
             onFailure: function(err) {
               alert('Invalid credentials');
+              setProgress(false);
               console.log(err);
              
             },
@@ -114,6 +121,7 @@ const Login = ()=>{
           id="standard-password-input"
           label="Password"
           type="password"
+          required id="standard-required"
         
           autoComplete="current-password"
           onChange={setPasswordChange}
@@ -122,9 +130,11 @@ const Login = ()=>{
     </Grid>
        
     <div className={moduleClasses.actions}>
-          <Button type="submit"  variant="contained" color="primary" onClick={loginHandler}>
-            Login
-          </Button>
+          
+            
+            {progress ?<CircularProgress size={24} className={classes.buttonProgress} />:<Button type="submit"  variant="contained" color="primary" onClick={loginHandler}> Login</Button>}
+         
+          
         </div>
       
         </form>

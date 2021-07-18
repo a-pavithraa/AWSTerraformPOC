@@ -59,7 +59,7 @@ export const AuthContextProvider = (props) => {
       clearTimeout(logoutTimer);
     }
     dispatch(stockServiceActions.logout());
-  }, []);
+  }, [dispatch]);
 
   const loginHandler = (token, expirationTime) => {
     setToken(token);

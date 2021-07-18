@@ -1,34 +1,18 @@
-import React,{useState,useCallback} from 'react';
+import React,{useCallback} from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import Tooltip from '@material-ui/core/Tooltip';
-import Modal from '@material-ui/core/Modal';
-import { useStyles } from '../../components/UI/Theme';
-import WatchListDetails from './WatchListDetails';
-import { useHistory, useLocation } from 'react-router-dom';
-function rand() {
-    return Math.round(Math.random() * 20) - 10;
-  }
-
+import { useHistory } from 'react-router-dom';
+import CustomToolbar from '../UI/GridCustomToolbar';
 
 const WatchListsGrid = (props)=>{
-  /*const { data } = useDemoData({
-    dataSet: 'Commodity',
-    rowLength: 1000,
-    maxColumns: 6,
-  });
-    console.log(data);*/
-    
-    
-    const classes = useStyles();
-    
+ 
     const history = useHistory();
     const clickHandler = useCallback((event,row)=>{
         event.preventDefault();   
-        history.push("/portfolio?userId="+row.userId+'&pfId='+row.pfId+'&name='+row.name)     
-      
-     
+        history.push("/portfolio?userId="+row.userId+'&pfId='+row.pfId+'&name='+row.name) 
+         
        
-    },[]);
+    },[history]);
 
    
     const columns =[{
@@ -76,7 +60,9 @@ const WatchListsGrid = (props)=>{
     
       return (
         <div style={{ height: 400, width: '100%' }}>
-          <DataGrid pagination {...data1}  getRowId={(row) => row.name}/>
+          <DataGrid pagination {...data1}  getRowId={(row) => row.name} components={{
+          Toolbar: CustomToolbar,
+        }}/>
          </div>
        
       );

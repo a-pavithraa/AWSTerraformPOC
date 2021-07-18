@@ -1,11 +1,7 @@
-import { createMuiTheme,lighten } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
 import { makeStyles } from "@material-ui/core/styles";
 
-import TextField from '@material-ui/core/TextField';
-import indigo from '@material-ui/core/colors/indigo';
-import grey from '@material-ui/core/colors/grey';
 
-import { shadows } from '@material-ui/system';
 
 export const darkTheme = createMuiTheme({
     palette: {
@@ -37,6 +33,7 @@ export const darkTheme = createMuiTheme({
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
       color: 'white',
       height: 48,
+      fontSize:"12px",
       padding: '0 30px',
       '& .MuiButton':{
         margin: theme.spacing(2),

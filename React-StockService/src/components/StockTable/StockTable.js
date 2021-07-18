@@ -1,14 +1,36 @@
-import React from 'react';
+import React,{useState,useCallback} from 'react';
 import { DataGrid } from '@material-ui/data-grid';
+import Modal from '@material-ui/core/Modal';
+import StockGrowth from '../Charts/StockGrowth';
+import { useStyles } from '../../components/UI/Theme';
+import CustomToolbar from '../UI/GridCustomToolbar';
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
 
-
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
 const StockTable = (props)=>{
-  /*const { data } = useDemoData({
-    dataSet: 'Commodity',
-    rowLength: 1000,
-    maxColumns: 6,
-  });
-    console.log(data);*/
+  const [openDialog, setOpenDialog] = useState(false);
+  const [rowVals,setSelectedRowVals] = useState({});
+  const [modalStyle] = useState(getModalStyle);  
+  const classes = useStyles();
+  const clickHandler = useCallback((event,row)=>{
+    event.preventDefault();        
+    setSelectedRowVals({symbol:row.symbol});
+    setOpenDialog(true);
+},[]);
+
+const handleClose=()=>{
+    setOpenDialog(false);
+}
     const columns =[{
       field:"shortName",
       headerName:"Name",
@@ -16,7 +38,14 @@ const StockTable = (props)=>{
     },{
       field:"symbol",
       headerName:"Symbol",
-      width:200
+      width:200,
+      renderCell: (params) => (
+        <div>
+          <a href="#" onClick={(event)=>clickHandler(event,params.row)} style={{color:"white"}}>{params.value}</a>
+         
+        </div>
+      )
+    
     },{
       field:"quoteType",
       headerName:"Type",
@@ -24,21 +53,44 @@ const StockTable = (props)=>{
     },{
       field:"regularMarketPreviousClose",
       headerName:"Previous Close",
-      width:200
+      width:200,
+      renderCell: (params) =>  (
+       params.value.toFixed(2)
+      
+       )
     },{
-      field:"regularMarketPrice",   
-      headerName:"Price",
+      field:"regularMarketChangePercent",   
+      headerName:"Change %",
+      width:200,
+      renderCell: (params) =>  (
+       params.value.toFixed(2)
+      
+       )
+    },{
+      field:"priceHint",
+      headerName:"Price Hint",
       width:200
     }];
 
     const data1 ={columns:columns,rows:props.data}
-    console.log('render called');
-
+    
+    const body = (
+      <div style={modalStyle}  className={classes.paper}>
+        
+        <StockGrowth symbol={rowVals.symbol}/>
+       
+      </div>
+    );
     
     
       return (
         <div style={{ height: 400, width: '100%' }}>
-          <DataGrid pagination {...data1}  getRowId={(row) => row.symbol}/>
+          <DataGrid pagination {...data1}  getRowId={(row) => row.symbol}  components={{
+          Toolbar: CustomToolbar,
+        }}/>
+          <Modal  open={openDialog}  onClose={handleClose}  >
+        {body}
+        </Modal>
         </div>
       );
 }
