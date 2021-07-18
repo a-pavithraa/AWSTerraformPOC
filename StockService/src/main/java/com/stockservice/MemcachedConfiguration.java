@@ -3,6 +3,7 @@ package com.stockservice;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
@@ -16,6 +17,7 @@ import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.stockservice.cache.CustomKeyGenerator;
 import com.stockservice.cache.Memcached;
 
 @Configuration
@@ -42,12 +44,16 @@ public class MemcachedConfiguration implements CachingConfigurer {
     private Collection<Memcached> internalCaches() throws IOException {
         final Collection<Memcached> caches = new ArrayList<>();
         caches.add(new Memcached("stockServiceCache", memcachedAddresses, expirationSec));
+        caches.add(new Memcached("watchListCache", memcachedAddresses, expirationSec));
+        caches.add(new Memcached("watchListPerformance", memcachedAddresses, expirationSec));
+        caches.add(new Memcached("watchListDetails", memcachedAddresses, expirationSec));
+        caches.add(new Memcached("chartDetails", memcachedAddresses, expirationSec));
         return caches;
     }
 
     @Override
     public KeyGenerator keyGenerator() {
-        return new SimpleKeyGenerator();
+        return new CustomKeyGenerator();
     }
 
     @Override

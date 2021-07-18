@@ -1,5 +1,6 @@
 package com.stockservice.webservice;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 
 import feign.Retryer;
@@ -13,6 +14,8 @@ import feign.codec.ErrorDecoder;
 
 
 public class StockServiceFeignConfig {
+	 @Value("${rapidapi.key}")
+	    private String apiKey;
 	
 	 @Bean
 	  public Retryer retryer() {
@@ -22,7 +25,7 @@ public class StockServiceFeignConfig {
 	  @Bean
 	  public RequestInterceptor feignRequestInterceptor() {
 		  
-	    return t -> t.header("x-rapidapi-key", "1c166ffaf2msh3d0fe1a1205694ap1ec782jsnf88e53ed8511").header("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com");
+	    return t -> t.header("x-rapidapi-key", apiKey).header("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com");
 	  }
 
 	  @Bean
