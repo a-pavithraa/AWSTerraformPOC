@@ -1,5 +1,6 @@
 import { loginActions } from './login-slice';
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
+import {USER_POOL_ID,CLIENT_ID} from '../utils/Constants';
 
 export const login = (userName,password) => {
   return  (dispatch) => {
@@ -9,8 +10,8 @@ export const login = (userName,password) => {
           Password : password,
       };
       var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
-      var poolData = { UserPoolId : 'us-east-1_DUfDYLnmA',
-          ClientId : '7sopkguq2mmi4vf7dhnet51kjn'
+      var poolData = { UserPoolId : USER_POOL_ID,
+          ClientId : CLIENT_ID
       };
       var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
       var userData = {
@@ -21,8 +22,7 @@ export const login = (userName,password) => {
       
        cognitoUser.authenticateUser(authenticationDetails, {
           onSuccess: function (result) {
-              var accessToken = result.getAccessToken().getJwtToken();
-              console.log('success called');
+              var accessToken = result.getAccessToken().getJwtToken();              
               var idToken = result.idToken.jwtToken;
               localStorage.setItem("jwtToken",idToken);
              dispatch(loginActions.login());
@@ -32,7 +32,7 @@ export const login = (userName,password) => {
           },
       
           onFailure: function(err) {
-            console.log('onfailure called');
+           
            dispatch(loginActions.invalidCredential());
           },
       

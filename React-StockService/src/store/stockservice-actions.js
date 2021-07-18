@@ -20,8 +20,7 @@ export const fetchTicks = (token) => {
           throw new Error('Could not fetch ticks!');
         }
   
-        const data = await response.json();
-        console.log(data);
+        const data = await response.json();     
   
         return data;
       };

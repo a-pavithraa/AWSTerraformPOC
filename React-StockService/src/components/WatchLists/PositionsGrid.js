@@ -29,7 +29,7 @@ const PositionGrid = (props)=>{
  
   const clickHandler = useCallback((event,row)=>{
     event.preventDefault();        
-    setSelectedRowVals({symbol:row.symbol});
+    setSelectedRowVals({symbol:row.symbol,name:row.shortName});
     setOpenDialog(true);
 },[]);
 const handleClose=()=>{
@@ -194,7 +194,7 @@ const handleClose=()=>{
         const body = (
           <div style={modalStyle}  className={classes.paper}>
             
-            <StockGrowth symbol={rowVals.symbol}/>
+            <StockGrowth symbol={rowVals.symbol} name={rowVals.name}/>
            
           </div>
         );

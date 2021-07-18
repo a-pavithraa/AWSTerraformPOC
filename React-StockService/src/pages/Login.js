@@ -71,9 +71,7 @@ const Login = ()=>{
         
          cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: function (result) {
-                var accessToken = result.getAccessToken().getJwtToken();
-                console.log('success called');
-                console.log(result);
+                var accessToken = result.getAccessToken().getJwtToken();                
                 var idToken = result.idToken.jwtToken;
                 localStorage.setItem('jwtToken', idToken);
                 setProgress(false);

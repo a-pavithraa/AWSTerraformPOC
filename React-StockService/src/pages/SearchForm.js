@@ -32,8 +32,7 @@ const SearchForm = () => {
 
   const ticks = useSelector((state) => state.stockService.ticks);
   const dispatch = useDispatch();
-  useEffect(() => {
-    console.log('fetch ticks called');
+  useEffect(() => {    
     if(authCtx.token!==null &&authCtx.token!==undefined)
     dispatch(fetchTicks(authCtx.token));
 

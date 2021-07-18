@@ -30,10 +30,7 @@ const WatchListDetails = (props) => {
 
         }
 
-        const data = await response.json();
-
-        console.log('inside cards');
-        console.log(data.finance);
+        const data = await response.json();      
 
         setWatchListItem(data.finance.result[0]);
 

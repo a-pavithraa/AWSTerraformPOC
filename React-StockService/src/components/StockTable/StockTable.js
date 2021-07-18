@@ -24,7 +24,7 @@ const StockTable = (props)=>{
   const classes = useStyles();
   const clickHandler = useCallback((event,row)=>{
     event.preventDefault();        
-    setSelectedRowVals({symbol:row.symbol});
+    setSelectedRowVals({symbol:row.symbol,name:row.shortName});
     setOpenDialog(true);
 },[]);
 
@@ -34,10 +34,6 @@ const handleClose=()=>{
     const columns =[{
       field:"shortName",
       headerName:"Name",
-      width:200
-    },{
-      field:"symbol",
-      headerName:"Symbol",
       width:200,
       renderCell: (params) => (
         <div>
@@ -45,6 +41,10 @@ const handleClose=()=>{
          
         </div>
       )
+    },{
+      field:"symbol",
+      headerName:"Symbol",
+      width:200
     
     },{
       field:"quoteType",
@@ -77,7 +77,7 @@ const handleClose=()=>{
     const body = (
       <div style={modalStyle}  className={classes.paper}>
         
-        <StockGrowth symbol={rowVals.symbol}/>
+        <StockGrowth symbol={rowVals.symbol} name={rowVals.name}/>
        
       </div>
     );

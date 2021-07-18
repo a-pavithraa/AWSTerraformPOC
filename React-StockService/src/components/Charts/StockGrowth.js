@@ -48,8 +48,8 @@ const StockGrowth = (props)=>{
 
         }
 
-        const data = await response.json();      
-        console.log(data.chart);
+        const data = await response.json();     
+      
         setChartData(data.chart.result[0]);
 
     }, [props.symbol]);
@@ -65,7 +65,7 @@ const StockGrowth = (props)=>{
                 fill: false,
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgba(255, 99, 132, 0.2)',
-                yAxisID: 'y-axis-1',
+                yAxisID: 'High Values',
               },
               {
                 label: 'Low',
@@ -73,13 +73,13 @@ const StockGrowth = (props)=>{
                 fill: false,
                 backgroundColor: 'rgb(54, 162, 235)',
                 borderColor: 'rgba(54, 162, 235, 0.2)',
-                yAxisID: 'y-axis-2',
+                yAxisID: 'Low values',
               },
             ],
           };
           details =<>
           <div className='header'>
-            <h1 className='title'>{pros.name}-Past 1 year Performance by Month </h1>
+            <h1 className='title'>{props.name}-Past 1 year Performance by Month </h1>
             <div className='links'>
               
             </div>

@@ -10,8 +10,7 @@ import AuthContext from './store/auth-context';
 import Portfolio from './pages/Portfolio';
 function App() {
  
-  const ctx = useContext(AuthContext);
-  console.log('loggedin==='+ctx.isLoggedIn);
+  const ctx = useContext(AuthContext);  
  
   return (
    
