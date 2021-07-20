@@ -68,3 +68,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+### Configure the following files in src/utils/Constants.js ###
+Configure the below values:
+* STOCK_SERVICE_API_URL --> ALB URL
+* USER_POOL_ID --> Cognito User Pool ID
+* CLIENT_ID --> Cognito Pool Client ID
