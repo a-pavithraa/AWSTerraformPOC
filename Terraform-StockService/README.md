@@ -24,4 +24,5 @@ instance_keypair<br/>
 private_instance_count <br/>
 domain_name           <br/>
 bucket_name            <br/>
+VPC CIDR Block (subnets CIDRs will be calculated based on VPC CIDR. No need to configure separately)  <br/>
  
