@@ -29,7 +29,7 @@ const PositionGrid = (props)=>{
  
   const clickHandler = useCallback((event,row)=>{
     event.preventDefault();        
-    setSelectedRowVals({symbol:row.symbol,name:row.shortName});
+    setSelectedRowVals({symbol:row.symbol,name:row.quoteDetails.shortName});
     setOpenDialog(true);
 },[]);
 const handleClose=()=>{

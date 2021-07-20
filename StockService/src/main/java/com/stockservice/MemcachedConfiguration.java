@@ -44,10 +44,7 @@ public class MemcachedConfiguration implements CachingConfigurer {
     private Collection<Memcached> internalCaches() throws IOException {
         final Collection<Memcached> caches = new ArrayList<>();
         caches.add(new Memcached("stockServiceCache", memcachedAddresses, expirationSec));
-        caches.add(new Memcached("watchListCache", memcachedAddresses, expirationSec));
-        caches.add(new Memcached("watchListPerformance", memcachedAddresses, expirationSec));
-        caches.add(new Memcached("watchListDetails", memcachedAddresses, expirationSec));
-        caches.add(new Memcached("chartDetails", memcachedAddresses, expirationSec));
+       
         return caches;
     }
 

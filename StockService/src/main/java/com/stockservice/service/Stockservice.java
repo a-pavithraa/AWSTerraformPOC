@@ -29,15 +29,15 @@ public class Stockservice {
 		return stockService.getTrendingTickers();
 		
 	}
-	 @Cacheable("watchListCache")
+	 @Cacheable("stockServiceCache")
 	 public WatchList getWatchList() {
 		 return stockService.getPopularWatchList();
 	 }
-	 @Cacheable("watchListPerformance")
+	 @Cacheable("stockServiceCache")
 	 public WatchListPerformaceFinance getWatchListPerformance( String pfId,String symbol,String userId) {
 		 return stockService.getWatchListPerformance(pfId, symbol, userId);
 	 }
-	 @Cacheable("watchListDetails")
+	 @Cacheable("stockServiceCache")
 	 public WatchListDetails getWatchListDetails( String pfId, String userId) {
 		 WatchListDetails response = stockService.getWatchListDetails(pfId, userId);
 		 WatchListDetailResult result = response.getFinance().getResult().get(0);
@@ -52,7 +52,7 @@ public class Stockservice {
 			System.out.println(response);
 			return response;
 	 }
-	 @Cacheable("chartDetails")	 
+	 @Cacheable("stockServiceCache")	 
 	 public ChartDetails getChartListForSymbol(String symbol, String interval, String range,String comparisons,String region) {
 		 return stockService.getChartListForSymbol(symbol, interval, range,comparisons,region);
 	 }

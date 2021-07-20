@@ -63,16 +63,7 @@ marginBottom:`20px`
       padding: '0 30px',
       marginTop:theme.spacing(10)
     },
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-      borderBottomColor: "#ffffff",
-      color:"#ffffff",
-      padding:"0px"
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2)
-    },
+    
     tabClass: {
       width: "98%",
       marginTop:theme.spacing(10),
@@ -93,23 +84,7 @@ marginBottom:`20px`
       paddingLeft: "5px",
       fontWeight: "bolder"
     },
-    searchBox: {
-      boxShadow:
-        "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
-      paddingLeft: "5px",
-      paddingRight: "5px",
-      paddingBottom: "10px",
-      display: "block",
-      backgroundColor: "rgb(66,66,66)"
-     
-    },
-    progress: {
-      margin: theme.spacing(2)
-    },
-    heading: {
-      fontSize: '20px',
-      fontWeight: 'bolder'
-    },
+   
     mainHeading: {
       fontSize: '25px',
       fontWeight: 'bolder',
@@ -148,35 +123,7 @@ marginBottom:`20px`
         duration: theme.transitions.duration.shortest,
       }),
     },
-    smallHeadingLight: {
-      color: "#969aaa",
-      marginBottom: "5px",
-      fontWeight: "600",
-      fontSize:'14px',
-      display: "block"
-    },
-    cardValLight:{
-      fontWeight: "600",
-      fontSize:'18px',
-      display: "block",
-      color: "#fff",
-      marginBottom: "10px"
-    },
-    cardValDark:{
-      fontWeight: "400",
-      fontSize:'0.875rem',
-      display: "block",
-      color: "#000",
-      marginBottom: "10px"
-    },
-    expandOpen: {
-      transform: 'rotate(180deg)',
-    },
-    darkGrid: {
-     
-      backgroundColor:'rgb(66,66,66)',
-      color:'#dfe4f1'
-    },
+    
     drawer: {
       [theme.breakpoints.up('sm')]: {
         width: drawerWidth,
@@ -224,6 +171,12 @@ marginBottom:`20px`
     paddingBottom: "10px",
     
 
+  },
+  centerAlign: {
+    margin: "auto",
+    width: "10%",
+    
+    padding: "10px"
   }
    
   }));

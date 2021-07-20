@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react';
 import { Line } from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {STOCK_SERVICE_API_URL} from '../../utils/Constants';
-
+import { useStyles } from '../../components/UI/Theme';
 
 const options = {
   scales: {
@@ -31,6 +31,7 @@ const options = {
 const StockGrowth = (props)=>{
 
     const [chartData,setChartData]=useState();
+    const classes = useStyles();
 
     useEffect(async () => {
 
@@ -53,7 +54,7 @@ const StockGrowth = (props)=>{
         setChartData(data.chart.result[0]);
 
     }, [props.symbol]);
-    let details =<CircularProgress/>
+    let details =<div className={classes.centerAlign}><CircularProgress/></div>;
     if(chartData && chartData.comparisons){
         const comparisons =chartData.comparisons[0];
         const data = {
@@ -79,7 +80,7 @@ const StockGrowth = (props)=>{
           };
           details =<>
           <div className='header'>
-            <h1 className='title'>{props.name}-Past 1 year Performance by Month </h1>
+            <h1 className='title'>{props.name}- Performance by Month </h1>
             <div className='links'>
               
             </div>
