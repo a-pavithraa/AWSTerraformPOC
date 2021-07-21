@@ -18,10 +18,11 @@ Creates the following resources:<br/>
  Domain must be hosted at Route53
  <br/><br/>
  
- I have not checked in terraform.tfvars. Values for the below variables have to be added in tfvars:<br/>
+ I have not checked in terraform.tfvars. Values for the below variables have to be added in tfvars:<br/><br/>
 instance_type <br/>
 instance_keypair<br/>
 private_instance_count <br/>
 domain_name           <br/>
 bucket_name            <br/>
+VPC CIDR Block (subnets CIDRs will be calculated based on VPC CIDR. No need to configure separately)  <br/>
  
