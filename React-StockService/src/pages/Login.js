@@ -172,7 +172,7 @@ const Login = ()=>{
             
             {progress ?<CircularProgress size={24} className={classes.buttonProgress} />:<Button type="submit"  variant="contained" color="primary" onClick={loginHandler}> Login</Button>}
             
-           &nbsp;&nbsp; <Button type="submit"  variant="contained" color="primary" onClick={googleLogin}> Sign In With Google</Button>
+           &nbsp;&nbsp; <Button type="submit"  variant="contained" color="primary" onClick={googleLogin}> Login In With Google</Button>
           
         </div>
       
