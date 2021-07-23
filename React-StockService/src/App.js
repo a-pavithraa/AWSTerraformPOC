@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import AuthContext from './store/auth-context';
 import Portfolio from './pages/Portfolio';
+
 function App() {
  
   const ctx = useContext(AuthContext);  
@@ -18,6 +19,7 @@ function App() {
       <header className="App-header">
         <Layout>
           <Switch>
+        
         <Route path='/' exact>
         {ctx.isLoggedIn && <SearchForm />}
           {!ctx.isLoggedIn && <Redirect to='/login' />}
@@ -26,8 +28,7 @@ function App() {
        
         
          <Route path='/login' exact>
-         {ctx.isLoggedIn && <Redirect to='/search' />}
-          {!ctx.isLoggedIn && <Login/>}
+        <Login/>
        </Route>
       
         <Route path='/search'>

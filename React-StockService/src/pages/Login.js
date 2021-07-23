@@ -4,12 +4,13 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import moduleClasses from './Login.module.scss';
-import { useHistory} from 'react-router-dom';
+import { useHistory,useLocation} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 
 import AuthContext from '../store/auth-context';
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const Login = ()=>{
     const classes = useStyles();
     const history = useHistory();
-    
+    const location = useLocation();
     const context = useContext(AuthContext);
 
    
@@ -36,6 +37,7 @@ const Login = ()=>{
     const [userName,setUserName] =useState();
     const [progress,setProgress] =useState(false);
     const[password,setPassword]=useState();
+    const [federatedId,setFederatedId] = useState();
     const setUserNameChange =(event)=>{
     
       setUserName(event.target.value);
@@ -43,7 +45,45 @@ const Login = ()=>{
     }
     const setPasswordChange =(event)=>{
       setPassword(event.target.value);
+      
 
+    }
+    useEffect(()=>{
+    
+      if (location.hash) {
+        var hash = location.hash.substr(1);
+
+        var result = hash.split('&').reduce(function (res, item) {
+        var parts = item.split('=');
+        res[parts[0]] = parts[1];
+        return res;
+    }, {});
+        
+        console.log(result.id_token);
+        const idToken = result.id_token;
+        console.log(idToken);
+        localStorage.setItem('jwtToken', idToken);
+        
+       
+        const expirationTime = new Date(
+          new Date().getTime() + +3600 * 1000
+        );
+       
+        context.login(idToken,expirationTime);
+        history.push("/search")
+      }
+
+    },[location,history,context]);
+
+    const responseGoogle = (response) => {
+      console.log(response);
+    }
+    
+
+    const googleLogin = event=>{
+      event.preventDefault();
+      window.open( 'https://todo0307.auth.us-east-1.amazoncognito.com/login?client_id=7sopkguq2mmi4vf7dhnet51kjn&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+profile&redirect_uri=http://localhost:3000/login/');
+      
     }
    
     const loginHandler = (event)=>{
@@ -131,7 +171,8 @@ const Login = ()=>{
           
             
             {progress ?<CircularProgress size={24} className={classes.buttonProgress} />:<Button type="submit"  variant="contained" color="primary" onClick={loginHandler}> Login</Button>}
-         
+            
+           &nbsp;&nbsp; <Button type="submit"  variant="contained" color="primary" onClick={googleLogin}> Sign In With Google</Button>
           
         </div>
       
