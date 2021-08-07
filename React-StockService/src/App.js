@@ -8,7 +8,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import AuthContext from './store/auth-context';
 import Portfolio from './pages/Portfolio';
-import Dashboard from './pages/Dashboard';
+import AuthenticatedRoute from './utils/AuthenticatedRoute';
+import UnAuthenticatedRoute from './utils/UnAuthenticatedRoute';
+
+
 
 function App() {
 
@@ -20,25 +23,29 @@ function App() {
       <header className="App-header">
         <Layout>
           <Switch>
+          <UnAuthenticatedRoute
+          path="/login"
+          component={Login}
+          appProps={ ctx.isLoggedIn }
+        />
+        <AuthenticatedRoute
+          path="/search"
+          component={SearchForm}
+          appProps={ ctx.isLoggedIn }
+        />
+         <AuthenticatedRoute
+          path="/"
+          exact
+          component={SearchForm}
+          appProps={ ctx.isLoggedIn }
+        />
+         <AuthenticatedRoute
+          path="/portfolio"
+          component={Portfolio}
+          appProps={ ctx.isLoggedIn }
+        />
 
-            <Route path='/dashboard' >
-              <Dashboard/>
-            </Route>
-
-
-            <Route path='/login' exact>
-              <Login />
-            </Route>
-
-            <Route path='/search'>
-              {ctx.isLoggedIn && <SearchForm />}
-              {!ctx.isLoggedIn && <Redirect to='/login' />}
-            </Route>
-
-            <Route path='/portfolio'>
-              {ctx.isLoggedIn && <Portfolio />}
-              {!ctx.isLoggedIn && <Redirect to='/login' />}
-            </Route>
+         
           </Switch>
         </Layout>
 

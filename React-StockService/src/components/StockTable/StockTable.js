@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import MaterialTable from 'material-table'
+import MaterialTable from 'material-table';
 import Modal from '@material-ui/core/Modal';
 import StockGrowth from '../Charts/StockGrowth';
 import { useStyles } from '../../components/UI/Theme';

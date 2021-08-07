@@ -1,5 +1,5 @@
 import React,{useState,useCallback} from 'react';
-import { DataGrid } from '@material-ui/data-grid';
+import MaterialTable from 'material-table';
 import { useStyles } from '../UI/Theme';
 import CustomToolbar from '../UI/GridCustomToolbar';
 import Modal from '@material-ui/core/Modal';
@@ -42,147 +42,147 @@ const handleClose=()=>{
 
         const columns =[{
           field:"symbol",
-          headerName:"Symbol",
+          title:"Symbol",
           width:130,          
-      renderCell: (params) => (
+      render: (params) => (
         <div>
-          <a href="#" onClick={(event)=>clickHandler(event,params.row)} style={{color:"white"}}>{params.value}</a>
+          <a href="#" onClick={(event)=>clickHandler(event,params)} style={{color:"white"}}>{params.symbol}</a>
          
         </div>
       )
           
         },{
           field:"tradeDate",
-          headerName:"Trade Date",
+          title:"Trade Date",
           width:150,
-          valueGetter: (params) => {
+          render: (params) => {
             
-            return params.row.lots[0].tradeDate;
+            return params.lots[0].tradeDate;
           }
          
         },{
           field:"purchasePrice",
-          headerName:"Purchase Price",
+          title:"Purchase Price",
           width:180,
-          valueGetter: (params) => {
+          render: (params) => {
             
-            return params.row.lots[0].purchasePrice.toFixed(2);
+            return params.lots[0].purchasePrice.toFixed(2);
           }
          
         },{
           field:"quantity",
-          headerName:"Quantity",
+          title:"Quantity",
           width:150,
-          valueGetter: (params) => {
+          render: (params) => {
             
-            return params.row.lots[0].quantity.toFixed(2);;
+            return params.lots[0].quantity.toFixed(2);;
           }
           
         },{
           field:"shortName",
-          headerName:"Name",
+          title:"Name",
           width:180,
-          valueGetter: (params) => {
+          render: (params) => {
             
-            return params.row.quoteDetails.shortName;
+            return params.quoteDetails.shortName;
           }
           
         },{
           field:"fullExchangeName",
-          headerName:"Exchange",
+          title:"Exchange",
           width:150,
-          valueGetter: (params) => {
+          render: (params) => {
             
-            return params.row.quoteDetails.fullExchangeName;
+            return params.quoteDetails.fullExchangeName;
           }
          
         },{
           field:"financialCurrency",
-          headerName:"Currency",
+          title:"Currency",
           width:180,
-          valueGetter: (params) => {
+          render: (params) => {
             
-            return params.row.quoteDetails.financialCurrency;
+            return params.quoteDetails.financialCurrency;
           }
          
         },{
           field:"averageDailyVolume3Month",
-          headerName:"3 Month Volume",
+          title:"3 Month Volume",
           width:150,
-          valueGetter: (params) => {
+          render: (params) => {
             
-            return params.row.quoteDetails.averageDailyVolume3Month.toFixed(2);
+            return params.quoteDetails.averageDailyVolume3Month.toFixed(2);
           }
           
         },{
             field:"averageDailyVolume10Day",
-            headerName:"10 Day Volume",
+            title:"10 Day Volume",
             width:150,
-            valueGetter: (params) => {
+            render: (params) => {
               
-              return params.row.quoteDetails.averageDailyVolume10Day.toFixed(2);
+              return params.quoteDetails.averageDailyVolume10Day.toFixed(2);
             }
             
           },{
             field:"fiftyTwoWeekLow",
-            headerName:"52 Week Low",
+            title:"52 Week Low",
             width:150,
-            valueGetter: (params) => {
+            render: (params) => {
               
-              return params.row.quoteDetails.fiftyTwoWeekLow.toFixed(2);
+              return params.quoteDetails.fiftyTwoWeekLow.toFixed(2);
             }
             
           },{
             field:"fiftyTwoWeekHigh",
-            headerName:"52 Week High",
+            title:"52 Week High",
             width:150,
-            valueGetter: (params) => {
+            render: (params) => {
               
-              return params.row.quoteDetails.fiftyTwoWeekHigh.toFixed(2);
+              return params.quoteDetails.fiftyTwoWeekHigh.toFixed(2);
             }
             
           },{
             field:"fiftyDayAverage",
-            headerName:"Average-50D",
+            title:"Average-50D",
             width:150,
-            valueGetter: (params) => {
+            render: (params) => {
               
-              return params.row.quoteDetails.fiftyDayAverage.toFixed(2);
+              return params.quoteDetails.fiftyDayAverage.toFixed(2);
             }
           },{
             field:"twoHundredDayAverage",
-            headerName:"Average-200D",
+            title:"Average-200D",
             width:150,
-            valueGetter: (params) => {
+            render: (params) => {
               
-              return params.row.quoteDetails.twoHundredDayAverage.toFixed(2);
+              return params.quoteDetails.twoHundredDayAverage.toFixed(2);
             }
             
           },{
             field:"regularMarketPrice",
-            headerName:"Regular Price",
+            title:"Regular Price",
             width:150,
-            valueGetter: (params) => {
+            render: (params) => {
               
-              return params.row.quoteDetails.regularMarketPrice.toFixed(2);
+              return params.quoteDetails.regularMarketPrice.toFixed(2);
             }
             
           },{
             field:"regularMarketChange",
-            headerName:"Regular Change",
+            title:"Regular Change",
             width:150,
-            valueGetter: (params) => {
+            render: (params) => {
               
-              return params.row.quoteDetails.regularMarketChange;
+              return params.quoteDetails.regularMarketChange;
             }
             
           },{
             field:"marketCap",
-            headerName:"Market Cap",
+            title:"Market Cap",
             width:150,
-            valueGetter: (params) => {
+            render: (params) => {
               
-              return params.row.quoteDetails.marketCap;
+              return params.quoteDetails.marketCap;
             }
             
           }];
@@ -191,6 +191,7 @@ const handleClose=()=>{
         
     
         const data1 ={columns:columns,rows:responseData}
+        let rows = JSON.parse(JSON.stringify(responseData));
         const body = (
           <div style={modalStyle}  className={classes.paper}>
             
@@ -202,8 +203,19 @@ const handleClose=()=>{
         
           return (
             <div style={{ height: 350, width: '100%' }}>
-              <DataGrid pagination {...data1}  getRowId={(row) => row.symbol}  components={{
-          Toolbar: CustomToolbar,
+              <MaterialTable columns={columns} data={rows} title=""
+        options={{
+         
+          maxBodyHeight: 300,
+          search:false,
+          toolbar: false,
+          headerStyle: {
+            alignItems: 'center', backgroundColor: '#000',
+            color: '#FFF', border: '1 px solid black'
+          },
+          rowStyle: {
+            padding: '3px',
+          }
         }}/>
           <Modal  open={openDialog}  onClose={handleClose}  >
         {body}
