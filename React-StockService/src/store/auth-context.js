@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {  useDispatch } from 'react-redux';
 import {stockServiceActions} from './stockservice-slice';
+import {STOCK_SERVICE_API_URL} from '../utils/Constants';
 let logoutTimer;
 
 const AuthContext = React.createContext({
   token: '',
   isLoggedIn: false,
+  premiumUser:false,
   login: (token) => {},
   logout: () => {},
+  subscribe: ()=>{}
 });
 
 const calculateRemainingTime = (expirationTime) => {
@@ -47,6 +50,7 @@ export const AuthContextProvider = (props) => {
   }
 
   const [token, setToken] = useState(initialToken);
+  const [premiumUser, setPremiumUser] = useState('');
 
   const userIsLoggedIn = !!token;
 
@@ -60,7 +64,26 @@ export const AuthContextProvider = (props) => {
     dispatch(stockServiceActions.logout());
   }, [dispatch]);
 
-  const loginHandler = (token, expirationTime) => {
+  const subscribe =  useCallback(async () => {
+    console.log('subscribe called');
+    const userResponse = await fetch(
+      STOCK_SERVICE_API_URL+'user', {
+         headers: {
+             'Content-Type': 'application/json',
+             'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
+         },
+         method:'POST'
+     }
+     );
+     if (!userResponse.ok) {
+         throw new Error('Could not subscribe user details!');
+  
+     }
+     const data = await userResponse.json();   
+     setPremiumUser(data.userName);
+  }, []);
+
+  const loginHandler = async (token, expirationTime) => {
     setToken(token);
     localStorage.setItem('jwtToken', token);   
     localStorage.setItem('expirationTime', expirationTime);
@@ -68,6 +91,27 @@ export const AuthContextProvider = (props) => {
     const remainingTime = calculateRemainingTime(expirationTime);
 
     logoutTimer = setTimeout(logoutHandler, remainingTime);
+  
+   const userResponse = await fetch(
+    STOCK_SERVICE_API_URL+'user', {
+       headers: {
+           'Content-Type': 'application/json',
+           'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
+       }
+   }
+   );
+   if (!userResponse.ok) {
+       throw new Error('Could not fetch user details!');
+
+   }
+
+   const data = await userResponse.json();   
+   if(data !==null && data.userName !== null){
+    setPremiumUser(data.userName);
+    console.log('in auth context=='+data.userName);
+   }
+    
+    
   };
 
   useEffect(() => {
@@ -82,6 +126,9 @@ export const AuthContextProvider = (props) => {
     isLoggedIn: userIsLoggedIn,
     login: loginHandler,
     logout: logoutHandler,
+    premiumUser:premiumUser,
+    subscribe: subscribe
+
   };
 
   return (

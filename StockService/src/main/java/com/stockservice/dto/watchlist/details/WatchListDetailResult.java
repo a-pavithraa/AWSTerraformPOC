@@ -9,8 +9,8 @@ import lombok.Data;
 @Data
 public class WatchListDetailResult implements Serializable{
 	 private String userId;
-	    private String userIdType;
-	    private List<Portfolio> portfolios;
-	    private Map<String,QuoteDetails>  quotes;
+	 private String userIdType;
+	 private List<Portfolio> portfolios;
+	 private Map<String,QuoteDetails>  quotes;
 
 }

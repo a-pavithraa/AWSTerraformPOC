@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(
-        prefix = "com.kb.jwt.aws"
+        prefix = "com.stockservice.jwt.aws"
 )
 public class JwtConfiguration {
     private String userPoolId;

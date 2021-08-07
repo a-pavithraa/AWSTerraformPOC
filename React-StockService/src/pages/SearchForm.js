@@ -13,6 +13,7 @@ import Tab from '@material-ui/core/Tab';
 import TabPanel from '../components/UI/TabPanel';
 import WatchLists from '../components/WatchLists/WatchLists';
 import AuthContext from '../store/auth-context';
+import Market from './Market';
 
 
 function a11yProps(index) {
@@ -53,6 +54,8 @@ const SearchForm = () => {
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
           <Tab label="Tickers" {...a11yProps(0)} />
           <Tab label="Watch Lists" {...a11yProps(1)} />
+          <Tab label="Dashboard" {...a11yProps(2)} />
+          
           
         </Tabs>
       </AppBar>
@@ -66,6 +69,9 @@ const SearchForm = () => {
       </TabPanel>
       <TabPanel value={value} index={1}>
       <WatchLists/>
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+      <Market/>
       </TabPanel>
      
 

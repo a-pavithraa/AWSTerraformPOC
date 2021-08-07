@@ -9,7 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.stockservice.dto.Root;
+import com.stockservice.dto.autosuggest.AutoSuggest;
 import com.stockservice.dto.chart.ChartDetails;
+import com.stockservice.dto.marketmovers.MarketMovers;
+import com.stockservice.dto.news.News;
+import com.stockservice.dto.spark.SparkBean;
 import com.stockservice.dto.watchlist.WatchList;
 import com.stockservice.dto.watchlist.details.Position;
 import com.stockservice.dto.watchlist.details.QuoteDetails;
@@ -56,5 +60,30 @@ public class Stockservice {
 	 public ChartDetails getChartListForSymbol(String symbol, String interval, String range,String comparisons,String region) {
 		 return stockService.getChartListForSymbol(symbol, interval, range,comparisons,region);
 	 }
+	 
+	 @Cacheable("stockServiceCache")	 
+	 public AutoSuggest autoComplete(String q, String region) {
+		 return stockService.autoComplete(q, region);
+	 }
+	 
+	 @Cacheable("stockServiceCache")	 
+	 public News getNews(String region) {
+		 return stockService.getNews(region);
+	 }
+	 
+	 @Cacheable("stockServiceCache")	 
+	 public MarketMovers getMarketMovers(String region, int count,int start) {
+		 MarketMovers marketMovers = stockService.getMarketMovers(region,count,start);
+		 
+		 return marketMovers;
+	 }
+	 
+	
+	 public SparkBean getSparkDetails(String symbol, String interval,String range) {
+		return stockService.getSpark(symbol,interval,range);
+		 
+		
+	 }
+
 
 }

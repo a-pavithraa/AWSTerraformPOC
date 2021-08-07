@@ -32,3 +32,19 @@
   color: #fff;
   font-weight: bolder;
 }
+.MuiTableRow-root {
+  color: inherit;
+  display: table-row;
+  outline: 0;
+  vertical-align: middle;
+  font-size: 13px;
+  &:hover{
+    background-color: #193a58;
+  }
+}
+
+[class^="Component-horizontalScrollContainer-"] ::-webkit-scrollbar-thumb {
+  border: 0.5px solid #031121;
+  border-radius: 0.5px;
+  background-color: rgba(0, 0, 0, .3);
+}
