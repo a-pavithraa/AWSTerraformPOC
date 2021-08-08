@@ -91,48 +91,9 @@ const NavBar = () => {
 
           <Typography variant="h6" className={classes.title}>
             Stock Details
-          </Typography>
-         
-          {context.isLoggedIn && <Autocomplete
-            id="asynchronous-demo"
-            style={{ width: 300 }}
-            open={open}
-            onOpen={() => {
-              setOpen(true);
-            }}
-            onClose={() => {
-              setOpen(false);
-            }}
-            value={inputValue}
-            onChange={(event, newValue) => {
-              setAutoSuggestVal(newValue);
-            }}
-            onInputChange={(event, newInputValue) => {
-              setInputValue(newInputValue);
-            }}
-            getOptionSelected={(option, value) => option.value === value.value}
-            getOptionLabel={(option) => option}
-            options={options}
-            loading={loading}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Symbols"
-                variant="outlined"
-              
-                InputProps={{
-                  ...params.InputProps,
-                  endAdornment: (
-                    <React.Fragment>
-                      {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                      {params.InputProps.endAdornment}
-                    </React.Fragment>
-                  ),
-                }}
-              />
-            )}
-          />}
-           {context.isLoggedIn && context.premiumUser==='' && <Button color="inherit" onClick={context.subscribe}>Subscribe</Button>}
+          </Typography>        
+
+           {context.isLoggedIn && (context.premiumUser===null ||context.premiumUser==='') && <Button variant="contained" color="primary" onClick={context.subscribe}>Subscribe</Button>}
           {context.isLoggedIn && <Button color="inherit" onClick={context.logout}>Logout</Button>}
 
         </Toolbar>

@@ -1,28 +1,15 @@
 import React, { useState, useCallback } from 'react';
 import MaterialTable from 'material-table';
-import Modal from '@material-ui/core/Modal';
+
 import StockGrowth from '../Charts/StockGrowth';
 import { useStyles } from '../../components/UI/Theme';
 import { setAutoFreeze } from 'immer';
 setAutoFreeze(false);
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
 
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
 const StockTable = (props) => {
   const [openDialog, setOpenDialog] = useState(false);
 
-  const [rowVals, setSelectedRowVals] = useState({});
-  const [modalStyle] = useState(getModalStyle);
+  const [rowVals, setSelectedRowVals] = useState({});  
   const classes = useStyles();
   const clickHandler = useCallback((event, row) => {
     event.preventDefault();
@@ -61,14 +48,7 @@ const StockTable = (props) => {
   const data1 = { columns: columns, rows: props.data }
 
   let rows = JSON.parse(JSON.stringify(props.data));
-  const body = (
-    <div style={modalStyle} className={classes.paper}>
-
-      <StockGrowth symbol={rowVals.symbol} name={rowVals.name} />
-
-    </div>
-  );
-
+  
 
   return (
     <div style={{ height: 400, width: '100%' }}>
@@ -84,9 +64,7 @@ const StockTable = (props) => {
             padding: '3px',
           }
         }} />
-      <Modal open={openDialog} onClose={handleClose}  >
-        {body}
-      </Modal>
+    {openDialog && <StockGrowth symbol={rowVals.symbol} name={rowVals.name} openDialog={openDialog} handleClose={handleClose}/>}
     </div>
   );
 }
