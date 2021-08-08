@@ -57,7 +57,8 @@ export const AuthContextProvider = (props) => {
   const logoutHandler = useCallback(() => {
     setToken(null);
     localStorage.removeItem('jwtToken');
-    localStorage.removeItem('expirationTime');    
+    localStorage.removeItem('expirationTime');   
+    setPremiumUser(null) ;
     if (logoutTimer) {
       clearTimeout(logoutTimer);
     }

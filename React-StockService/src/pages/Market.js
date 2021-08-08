@@ -1,4 +1,4 @@
-import React, { useState, useCallback,useEffect,useContext } from 'react';
+import React, { useState, useCallback, useEffect, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { useStyles } from '../components/UI/Theme';
 import moduleClasses from './Market.module.scss';
@@ -7,7 +7,7 @@ import Modal from '@material-ui/core/Modal';
 import StockGrowth from '../components/Charts/StockGrowth';
 import AuthContext from '../store/auth-context';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {STOCK_SERVICE_API_URL} from '../utils/Constants';
+import { STOCK_SERVICE_API_URL } from '../utils/Constants';
 import News from '../components/News/News';
 const response = {
   "finance": {
@@ -615,10 +615,10 @@ function getModalStyle() {
 const Market = () => {
   const classes = useStyles();
   const [symbol, setSelectedSymbol] = useState();
-  const [modalStyle] = useState(getModalStyle);
-  const [openDialog, setOpenDialog] = useState(false); 
+  const [openDialog, setOpenDialog] = useState(false);
   const context = useContext(AuthContext);
-  const [marketWatch,setMarketWatch]=useState(null);
+  const [marketWatch, setMarketWatch] = useState(null);
+  const premiumUserFlag = context.premiumUser !== null && context.premiumUser != '';
 
   const clickHandler = useCallback((symbol) => {
 
@@ -630,92 +630,86 @@ const Market = () => {
   }
   useEffect(async () => {
 
-
-    const response = await fetch(
-        STOCK_SERVICE_API_URL + 'api/marketMovers?region=US&start=1&count=25' , {
+    if (premiumUserFlag) {
+      const response = await fetch(
+        STOCK_SERVICE_API_URL + 'api/marketMovers?region=US&start=1&count=25', {
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem("jwtToken")
         }
-    }
-    );
-    if (!response.ok) {
+      }
+      );
+      if (!response.ok) {
         throw new Error('Could not fetch chartDetails!');
 
+      }
+
+      const data = await response.json();
+      console.log(Object.keys(data));
+      setMarketWatch(data);
     }
 
-    const data = await response.json();    
-    console.log(Object.keys(data)) ;
-    setMarketWatch(data);
-  
-    
 
-}, []);
+  }, [premiumUserFlag]);
+  let details = <h4>Not Authorized. Please register for accessing this functionality</h4>;
+  if (premiumUserFlag) {
 
-  let details=<div className={classes.centerAlign}><CircularProgress/></div>;
-  if(marketWatch!==null && marketWatch!==undefined){
-    const body = (
-      <div style={modalStyle} className={classes.paper}>
-    
-        <StockGrowth symbol={symbol} name={symbol} />
-    
-      </div>
-    );
-    details=<Grid container spacing={4} className={`${classes.smGridSpacing}  `}>
-    <Grid item xs={12} sm={12} lg={4}>
-      <div className={moduleClasses.panel}>
-        <div className={moduleClasses.panelTitle}>Day Gainers - US</div>
-        <div className={moduleClasses.row}>
-          {
-            response.finance.result[0].quotes.map(quote => {
-              return <div key={quote.symbol} className={moduleClasses.rowItem} onClick={() => clickHandler(quote.symbol)}>{quote.symbol}&nbsp; {quote.exchange}</div>
-            })
-          }
-        </div>
-      </div>
-    </Grid>
-  
-  
-    <Grid item xs={12} sm={12} lg={4}>
-  
-      <div className={moduleClasses.panel}>
-        <div className={moduleClasses.panelTitle}>Day Losers - US</div>
-        <div className={moduleClasses.row}>
-          {
-            response.finance.result[1].quotes.map(quote => {
-              return <div key={quote.symbol}  className={moduleClasses.rowItem}>{quote.symbol}</div>
-            })
-          }
-        </div>
-      </div>
-    </Grid>
-  
-    <Grid item xs={12} sm={12} lg={4}>
-      <div className={moduleClasses.panel}>
-        <div className={moduleClasses.panelTitle}>Day Most Active - US</div>
-        <div className={moduleClasses.row}>
-          {
-            response.finance.result[2].quotes.map(quote => {
-              return <div key={quote.symbol}  className={moduleClasses.rowItem}>{quote.symbol}</div>
-            })
-          }
-        </div>
-      </div>
-    </Grid>
-  
-    <Modal open={openDialog} onClose={handleClose}  >
-      {body}
-    </Modal>
-    <Grid item xs={12} sm={12} lg={12}>
-    <News/>
+    details = <div className={classes.centerAlign}><CircularProgress /></div>;
+    if (marketWatch !== null && marketWatch !== undefined) {
+
+      details = <Grid container spacing={4} className={`${classes.smGridSpacing}  `}>
+        <Grid item xs={12} sm={12} lg={4}>
+          <div className={moduleClasses.panel}>
+            <div className={moduleClasses.panelTitle}>Day Gainers - US</div>
+            <div className={moduleClasses.row}>
+              {
+                response.finance.result[0].quotes.map(quote => {
+                  return <div key={quote.symbol} className={moduleClasses.rowItem} onClick={() => clickHandler(quote.symbol)}>{quote.symbol}&nbsp; {quote.exchange}</div>
+                })
+              }
+            </div>
+          </div>
+        </Grid>
+
+
+        <Grid item xs={12} sm={12} lg={4}>
+
+          <div className={moduleClasses.panel}>
+            <div className={moduleClasses.panelTitle}>Day Losers - US</div>
+            <div className={moduleClasses.row}>
+              {
+                response.finance.result[1].quotes.map(quote => {
+                  return <div key={quote.symbol} className={moduleClasses.rowItem}>{quote.symbol}</div>
+                })
+              }
+            </div>
+          </div>
+        </Grid>
+
+        <Grid item xs={12} sm={12} lg={4}>
+          <div className={moduleClasses.panel}>
+            <div className={moduleClasses.panelTitle}>Day Most Active - US</div>
+            <div className={moduleClasses.row}>
+              {
+                response.finance.result[2].quotes.map(quote => {
+                  return <div key={quote.symbol} className={moduleClasses.rowItem}>{quote.symbol}</div>
+                })
+              }
+            </div>
+          </div>
+        </Grid>
+
+        {openDialog && <StockGrowth symbol={symbol} name={symbol} openDialog={openDialog} handleClose={handleClose} />}
+        <Grid item xs={12} sm={12} lg={12}>
+          <News />
+        </Grid>
       </Grid>
-  </Grid>
+    }
+
+
   }
- 
 
 
- 
-  
 
 
   return <React.Fragment>{details}</React.Fragment>

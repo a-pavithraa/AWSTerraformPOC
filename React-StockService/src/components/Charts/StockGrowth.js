@@ -3,7 +3,20 @@ import { Line } from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {STOCK_SERVICE_API_URL} from '../../utils/Constants';
 import { useStyles } from '../../components/UI/Theme';
+import Modal from '@material-ui/core/Modal';
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
 
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
 const options = {
   scales: {
     yAxes: [
@@ -32,6 +45,11 @@ const StockGrowth = (props)=>{
 
     const [chartData,setChartData]=useState();
     const classes = useStyles();
+    const [modalStyle] = useState(getModalStyle);
+    const [openDialog, setOpenDialog] = useState(false);
+    const handleClose = () => {
+      setOpenDialog(false);
+    }
 
     useEffect(async () => {
 
@@ -88,7 +106,7 @@ const StockGrowth = (props)=>{
           <Line data={data} options={options} />
         </>
     }
-    return <div style={{align:"center"}}>{details}</div>
+    return   <Modal open={props.openDialog} onClose={props.handleClose}  ><div style={modalStyle} className={classes.paper}><div style={{align:"center"}}>{details}</div></div></Modal>
 }
 
 export default StockGrowth;
