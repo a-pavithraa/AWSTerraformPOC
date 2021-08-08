@@ -59,7 +59,6 @@ module "loadbalancer_sg" {
 module "ecstask_sg" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "3.18.0"
-
   name        = "ecs-sg"
   description = "Security Group with HTTP open for entire Internet (IPv4 CIDR), egress ports are all world open"
   vpc_id      = module.vpc.vpc_id
