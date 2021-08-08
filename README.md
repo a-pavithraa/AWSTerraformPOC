@@ -21,6 +21,13 @@ Pre-requisites:
  <li>Docker </li>
  <li>Java 8 version or above </li>
  </ul>
+ <br/>
+ Images in DockerHub:
+ <ul>
+ <li> pavithravasudevan/stockservice</li>
+ <li> pavithravasudevan/userservice</li>
+  </ul>
+
 
 ![image](https://user-images.githubusercontent.com/23714753/128630484-547a5b4e-a37b-460b-83b1-29744f724b42.png)
 ![image](https://user-images.githubusercontent.com/23714753/128630498-17c439af-9893-49ef-b184-27e189fbed5e.png)
