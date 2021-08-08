@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class Stream implements Serializable{
-	public String id;
-    public Content content;
+	private String id;
+	private Content content;
 
 }
