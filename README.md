@@ -22,3 +22,7 @@ Pre-requisites:
  <li>Java 8 version or above </li>
  </ul>
 
+![image](https://user-images.githubusercontent.com/23714753/128630484-547a5b4e-a37b-460b-83b1-29744f724b42.png)
+![image](https://user-images.githubusercontent.com/23714753/128630498-17c439af-9893-49ef-b184-27e189fbed5e.png)
+![image](https://user-images.githubusercontent.com/23714753/128630509-af75eb96-cb1e-4455-8cc4-d462f3348c58.png)
+![image](https://user-images.githubusercontent.com/23714753/128630525-151bf075-ceb1-48d2-8b3b-f3768c238371.png)
